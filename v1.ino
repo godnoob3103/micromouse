@@ -262,11 +262,11 @@ void turnPID(float targetDeg) {
 // =========================================
 void alignFront() {
   // --- Config Parameters ---
-  const int ALIGN_TOLERANCE = 2;   // ยอมรับความต่างได้ไม่เกิน 2 mm (ละเอียดขึ้นหน่อย)
+  const int ALIGN_TOLERANCE = 1;   // ยอมรับความต่างได้ไม่เกิน 2 mm (ละเอียดขึ้นหน่อย)
   const int ALIGN_TIMEOUT = 3000;  // 3 วินาที (เผื่อเวลาหมุนหน่อย)
   const float Kp_align = 2.5;      // แรงหมุน (ถ้าส่ายให้ลดลงเหลือ 1.5-2.0)
-  const int MAX_ALIGN_PWM = 50;    // Limit PWM สูงสุด
-  const int MIN_ALIGN_PWM = 25;    // Limit PWM ต่ำสุด (กันมอเตอร์ครางแต่ไม่หมุน)
+  const int MAX_ALIGN_PWM = 37;    // Limit PWM สูงสุด
+  const int MIN_ALIGN_PWM = 35;    // Limit PWM ต่ำสุด (กันมอเตอร์ครางแต่ไม่หมุน)
   const int WALL_THRESHOLD = 305;  // ระยะกำแพงสูงสุดที่จะทำการ Align (mm)
 
   Serial.println("\n>>> START ALIGNMENT (FL:Pin16 vs FR:Pin6) <<<");
@@ -301,6 +301,7 @@ void alignFront() {
     // 5. เช็คว่าตรงหรือยัง?
     if (abs(error) <= ALIGN_TOLERANCE) {
       Serial.println(" -> [OK] Aligned!");
+      brakeMotors();
       setSpeed(0, 0); // เบรกทันที
       break;
     }
